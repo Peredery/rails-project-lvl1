@@ -1,0 +1,8 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2.2
+
+Documentation:
+  Enabled: false
+
+require: rubocop-minitest
