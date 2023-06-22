@@ -22,6 +22,17 @@ class HexletCodeTest < Minitest::Test
     end
     # rubocop:enable Lint/EmptyBlock
 
-    assert_equal(form, '<form action="#" method="post"></form>')
+    assert_equal('<form action="#" method="post"></form>', form)
+  end
+
+  def test_form_for_with_url
+    user = User.new name: 'rob', job: 'hexlet'
+
+    # rubocop:disable Lint/EmptyBlock
+    form = HexletCode.form_for(user, url: '/users') do |f|
+    end
+    # rubocop:enable Lint/EmptyBlock
+
+    assert_equal('<form action="/users" method="post"></form>', form)
   end
 end
