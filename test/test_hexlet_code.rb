@@ -7,11 +7,11 @@ class HexletCodeTest < Minitest::Test
   end
 
   def test_single_tag
-    assert HexletCode::Tag.build('br'), 'br'
+    assert_equal('<br>', HexletCode::Tag.build('br'))
   end
 
   def test_tag_with_body
-    assert HexletCode::Tag.build('label') { 'Email' }, '<label>Email</label>'
+    assert_equal('<label>Email</label>', HexletCode::Tag.build('label') { 'Email' })
   end
 
   def test_form_for
@@ -22,6 +22,6 @@ class HexletCodeTest < Minitest::Test
     end
     # rubocop:enable Lint/EmptyBlock
 
-    assert form, '<form action="#" method="post"></form>'
+    assert_equal(form, '<form action="#" method="post"></form>')
   end
 end
