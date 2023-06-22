@@ -6,4 +6,10 @@ module HexletCode
   class Error < StandardError; end
 
   autoload :Tag, 'hexlet_code/tag'
+  autoload :Form, 'hexlet_code/form'
+
+  def self.form_for(entity, **attributes)
+    form = Form.new(entity, **attributes)
+    form.build
+  end
 end
