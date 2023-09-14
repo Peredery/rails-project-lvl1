@@ -10,8 +10,8 @@ module HexletCode
   autoload :FormFields, 'hexlet_code/form_fields/form_fields'
   autoload :FormRender, 'hexlet_code/form_render'
 
-  def self.form_for(entity, **attributes)
-    form = Form.new(entity, **attributes)
+  def self.form_for(...)
+    form = Form.new(...)
     yield form if block_given?
     form.build
   end
