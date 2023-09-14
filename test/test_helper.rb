@@ -5,4 +5,10 @@ require 'hexlet_code'
 
 require 'minitest/autorun'
 
-User = Struct.new(:name, :job, keyword_init: true)
+def load_fixture(filename)
+  File.read(File.dirname(__FILE__) + "/fixtures/#{filename}")
+end
+
+def html_oneline(html)
+  html.gsub(/\n\s*/, '')
+end
