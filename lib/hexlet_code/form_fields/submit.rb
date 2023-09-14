@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'pry'
-
 module HexletCode
   module FormFields
     class Submit < Base
