@@ -6,11 +6,9 @@ module HexletCode
     def self.build(tag_name, **options)
       body = yield if block_given?
       attributes = options.map { |key, value| " #{key}=\"#{value}\"" }.join
-      if SINGLE_TAGS.include?(tag_name)
-        "<#{tag_name}#{attributes}>"
-      else
-        "<#{tag_name}#{attributes}>#{body}</#{tag_name}>"
-      end
+      return "<#{tag_name}#{attributes}>" if SINGLE_TAGS.include?(tag_name)
+
+      "<#{tag_name}#{attributes}>#{body}</#{tag_name}>"
     end
   end
 end

@@ -3,10 +3,8 @@
 module HexletCode
   module FormRender
     def self.call(form)
-      Tag.build('form', **form.normalized_attributes) do
-        form.fields.map do |field|
-          Tag.build(field.tag_name, **field.attributes) { field.body }
-        end.join
+      Tag.build('form', **form.attributes) do
+        form.fields.map(&:build).join
       end
     end
   end

@@ -2,8 +2,7 @@
 
 module HexletCode
   class Form
-    attr_reader :entity, :attributes
-    attr_accessor :fields
+    attr_accessor :fields, :attributes
 
     FORM_FIELDS_CLASS_PATH = 'HexletCode::FormFields::'
     DEFAULT_ACTION = '#'
@@ -11,22 +10,13 @@ module HexletCode
 
     def initialize(entity, **attributes)
       @entity = entity
-      @attributes = attributes
+      @attributes = normalize_attributes(attributes)
       @fields = []
-    end
-
-    def normalized_attributes
-      action = attributes[:url] || DEFAULT_ACTION
-      method = attributes[:method] || DEFAULT_METHOD
-      attributes
-        .except(:url, :method)
-        .merge({ action:, method: })
     end
 
     def input(entity_field_name, **attributes)
       entity_field_value = entity.public_send(entity_field_name)
       field_attributes = attributes.except(:as)
-      fields << field(:label).new(entity_field_name:) { entity_field_name.capitalize }
       fields << field(attributes[:as]).new(entity_field_name:, entity_field_value:, **field_attributes) do
         entity_field_value if attributes[:as] == :text
       end
@@ -38,12 +28,24 @@ module HexletCode
       fields << field(:submit).new(**field_attributes)
     end
 
-    def field(type = nil)
-      Object.const_get("#{FORM_FIELDS_CLASS_PATH}#{(type || 'input').capitalize}")
-    end
-
     def build
       FormRender.call(self)
+    end
+
+    private
+
+    attr_reader :entity
+
+    def normalize_attributes(attributes)
+      action = attributes[:url] || DEFAULT_ACTION
+      method = attributes[:method] || DEFAULT_METHOD
+      attributes
+        .except(:url, :method)
+        .merge({ action:, method: })
+    end
+
+    def field(type = nil)
+      Object.const_get("#{FORM_FIELDS_CLASS_PATH}#{(type || 'input').capitalize}")
     end
   end
 end

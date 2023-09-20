@@ -13,6 +13,13 @@ module HexletCode
           **custom_attributes
         }
       end
+
+      def build
+        [
+          Label.new(entity_field_name:) { entity_field_name.capitalize }.build,
+          super
+        ]
+      end
     end
   end
 end
